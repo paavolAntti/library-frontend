@@ -5,6 +5,7 @@ import { ALL_AUTHORS } from '../queries'
 import BirthYearForm from './BirthYearForm'
 
 
+
 const Authors = (props) => {
 	const result = useQuery(ALL_AUTHORS)
 	if (!props.show || result.loading) {
@@ -12,6 +13,8 @@ const Authors = (props) => {
 	}
 	
 	const authors = result.data.allAuthors
+	const authorOptions = authors.map(a => a = {value: a.name, label: a.name})
+	console.log('author names:', authorOptions)
 	return (
 		<div>
 			<h2>authors</h2>
@@ -36,7 +39,7 @@ const Authors = (props) => {
 				</tbody>
 			</table>
 			<h2>set birthyear</h2>
-			<BirthYearForm/>
+			<BirthYearForm authors={authorOptions}/>
 		</div>
 	)
 }
