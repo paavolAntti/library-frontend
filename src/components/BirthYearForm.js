@@ -12,24 +12,28 @@ const BirthYearForm = ({ authors }) => {
 		refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }]
 	})
 
-	//const nameOptions = authors.map(a => a = { value: a, label: a } )
 	const handleChange = (selectedAuthor) => {
 		setAuthor(selectedAuthor)
 		setName(selectedAuthor.value)
 		console.log('selected author', selectedAuthor)
 		console.log('name', name)
 	}
-	const handleSubmit = (event) => {
+	const handleSubmit = async (event) => {
 		event.preventDefault()
-		updateAuthor({
-			variables: {
-				name,
-				born
-			}
-		})
-		setName('')
-		setBorn('')
-		setAuthor('')
+		try {
+			await updateAuthor({
+				variables: {
+					name,
+					born
+				}
+			})
+			setName('')
+			setBorn('')
+			setAuthor('')
+		} catch (error) {
+			console.log(error.message)
+		}
+		
 	}
 	return (
 		<div>

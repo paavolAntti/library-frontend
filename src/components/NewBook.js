@@ -21,19 +21,23 @@ const NewBook = (props) => {
   const submit = async (event) => {
 	event.preventDefault()
 	console.log('add book...')
-	createBook({
-		variables: {
-			title,
-			author,
-			published,
-			genres
-		}
-	})
-    setTitle('')
-	setPublished('')
-    setAuhtor('')
-    setGenres([])
-    setGenre('')
+	try{
+		await createBook({
+			variables: {
+				title,
+				author,
+				published,
+				genres
+			}
+		})
+		setTitle('')
+		setPublished('')
+    	setAuhtor('')
+    	setGenres([])
+    	setGenre('')
+	} catch(error) {
+		console.log(error.message)
+	}
   }
 
   const addGenre = () => {

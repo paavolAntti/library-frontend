@@ -11,7 +11,7 @@ const Authors = (props) => {
 	if (!props.show || result.loading) {
 		return null
 	}
-	
+
 	const authors = result.data.allAuthors
 	const authorOptions = authors.map(a => a = {value: a.name, label: a.name})
 	console.log('author names:', authorOptions)
