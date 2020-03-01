@@ -2,16 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { LOGIN } from '../queries'
 
-const LoginFrom = ({ setError, setToken, show, setPage }) => {
+const LoginFrom = ({ setToken, show, setPage }) => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
+	const [login, result] = useMutation(LOGIN)
 	
-	const [login, result] = useMutation(LOGIN, {
-		onError: (error) => {
-			setError(error.graphQLErrors[0].message)
-		}
-	})
-
 	useEffect(() => {
 		if (result.data) {
 			console.log('using effect hook')
@@ -23,10 +18,15 @@ const LoginFrom = ({ setError, setToken, show, setPage }) => {
 	}, [result.data]) // eslint-disable-line
 	const submit = async (event) => {
 		event.preventDefault()
-		await login({ variables: {username, password } })
-		setUsername('')
-		setPassword('')
-		setPage('authors')
+		try {
+			await login({ variables: {username, password } })
+			setUsername('')
+			setPassword('')
+			setPage('authors')
+		} catch (error) {
+			console.log('error: ', error.message)
+		}
+		
 	}
 	
 	if (!show) return null
