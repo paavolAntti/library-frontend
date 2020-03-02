@@ -14,7 +14,6 @@ const Authors = (props) => {
 
 	const authors = result.data.allAuthors
 	const authorOptions = authors.map(a => a = {value: a.name, label: a.name})
-	console.log('author names:', authorOptions)
 	return (
 		<div>
 			<h2>authors</h2>
